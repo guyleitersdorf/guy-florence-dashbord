@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Guy & Florence Operational Dashboard</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --card: #111823;
+    --text: #e6eef7;
+    --muted: #9fb3c8;
+    --green: #22c55e;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --border: #223044;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: linear-gradient(180deg, #0b1120 0%, #0b0f14 100%);
+    color: var(--text);
+  }
+  header {
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(17,24,35,0.7);
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+  }
+  h1 { margin: 0 0 6px 0; font-size: 20px; }
+  .subtitle { color: var(--muted); font-size: 12px; }
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(150px, 1fr)) 140px;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  select, input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    background: #0b1320;
+    color: var(--text);
+    border-radius: 10px;
+    outline: none;
+  }
+  main { padding: 20px; }
+  .table-wrapper {
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    position: sticky;
+    top: 84px;
+    background: #0e1523;
+    z-index: 5;
+  }
+  th, td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+  .Green { background: rgba(34,197,94,0.18); color: var(--green); border: 1px solid rgba(34,197,94,0.5); }
+  .Yellow { background: rgba(245,158,11,0.18); color: var(--yellow); border: 1px solid rgba(245,158,11,0.5); }
+  .Red { background: rgba(239,68,68,0.18); color: var(--red); border: 1px solid rgba(239,68,68,0.5); }
+  .footer {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .hidden { display: none; }
+  .count {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Guy & Florence — Operational Dashboard</h1>
+  <div class="subtitle">Live view • Last updated: 2025-08-08 07:28 UTC</div>
+  <div class="controls">
+    <input id="search" placeholder="Search items & notes…" />
+    <select id="filter-area">
+      <option value="">All Priority Areas</option>
+    </select>
+    <select id="filter-owner">
+      <option value="">All Owners</option>
+    </select>
+    <select id="filter-status">
+      <option value="">All Statuses</option>
+      <option>Green</option>
+      <option>Yellow</option>
+      <option>Red</option>
+    </select>
+    <select id="sort">
+      <option value="status">Sort: Status</option>
+      <option value="owner">Sort: Owner</option>
+      <option value="area">Sort: Priority Area</option>
+      <option value="item">Sort: Item</option>
+    </select>
+  </div>
+  <div class="count" id="count"></div>
+</header>
+<main>
+  <div class="table-wrapper">
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Priority Area</th>
+          <th>Item</th>
+          <th>Owner</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="footer">Tip: Use filters above to narrow by area, owner, or status. Type to search.</div>
+</main>
+<script>
+const DATA = [{"Priority Area": "Financial Context", "Item": "Maintain 18-month runway post-VK SAFE & target raise", "Owner": "Guy", "Status": "Green", "Notes": "Runway intact, $1M VK SAFE signed, $1M Atria/Cenegenics targeted"}, {"Priority Area": "Financial Context", "Item": "Hire API Engineer", "Owner": "HR/Dani", "Status": "Yellow", "Notes": "Role approved, hiring in progress"}, {"Priority Area": "Financial Context", "Item": "Hire Marketing Operator & Digital Marketing Expert", "Owner": "HR/Dani", "Status": "Yellow", "Notes": "To start post-funding confirmation"}, {"Priority Area": "G&A Rhythm", "Item": "Board 1-pager for $1M & $2M ARR scenarios", "Owner": "Omer", "Status": "Red", "Notes": "Not started, high priority for Q3"}, {"Priority Area": "G&A Rhythm", "Item": "2026 Model ($5M board / $10M sales)", "Owner": "Omer", "Status": "Red", "Notes": "Not started, target Q4"}, {"Priority Area": "Ops Execution", "Item": "Affiliate Program Launch", "Owner": "Hadar", "Status": "Yellow", "Notes": "In progress, Q3 delivery"}, {"Priority Area": "Ops Execution", "Item": "Mega Affiliate Deal", "Owner": "Hadar", "Status": "Red", "Notes": "Not started, Q3 high impact"}, {"Priority Area": "Ops Execution", "Item": "Funnel Optimization ($300 CAC target)", "Owner": "Hadar", "Status": "Yellow", "Notes": "In progress, tracking conversion"}, {"Priority Area": "Tech/Product", "Item": "Improve API & Documentation", "Owner": "Dor/Matan", "Status": "Yellow", "Notes": "Pending API engineer hire"}, {"Priority Area": "Tech/Product", "Item": "Top 5 Security Certificates", "Owner": "Dor/Matan", "Status": "Red", "Notes": "Vendor/advisor not yet secured"}, {"Priority Area": "Tech/Product", "Item": "Performance Monitoring (Top 10 metrics)", "Owner": "Dor/Matan", "Status": "Yellow", "Notes": "Metrics defined, dashboard build pending"}, {"Priority Area": "Painpoint Fix", "Item": "Concise Sales Pitch", "Owner": "Kayla", "Status": "Yellow", "Notes": "Draft exists, needs testing"}, {"Priority Area": "Painpoint Fix", "Item": "Faster Client Adaptations", "Owner": "Product", "Status": "Yellow", "Notes": "SLA policy drafted, implementation pending"}, {"Priority Area": "Painpoint Fix", "Item": "Top 5 Marketing Ads Boost", "Owner": "Marketing", "Status": "Red", "Notes": "Not started"}, {"Priority Area": "Painpoint Fix", "Item": "$99 Lite Tier", "Owner": "Product", "Status": "Green", "Notes": "In beta scoping"}, {"Priority Area": "Legal & Compliance", "Item": "US Terms of Use (Paul Hastings review)", "Owner": "Kayla", "Status": "Red", "Notes": "Kickoff pending; align with self-serve launch"}, {"Priority Area": "Legal & Compliance", "Item": "Self-Serve (all regions) to Goldfarb", "Owner": "Ofir", "Status": "Red", "Notes": "Package & send for review"}, {"Priority Area": "Legal & Compliance", "Item": "IL Data Processing policy", "Owner": "Ofir", "Status": "Yellow", "Notes": "Collect feedback from Goldfarb"}, {"Priority Area": "Legal & Compliance", "Item": "IL Store legal review", "Owner": "Ofir", "Status": "Yellow", "Notes": "Discuss with Goldfarb"}, {"Priority Area": "Legal & Compliance", "Item": "IL Team options (board packet)", "Owner": "Ofir", "Status": "Yellow", "Notes": "Prep for next board cycle"}, {"Priority Area": "Legal & Compliance", "Item": "Guy salary (50k NIS) draft", "Owner": "Ofir", "Status": "Yellow", "Notes": "Draft & circulate"}, {"Priority Area": "Legal & Compliance", "Item": "California registration confirmation", "Owner": "Omer", "Status": "Yellow", "Notes": "Confirm receipt from Heather"}, {"Priority Area": "Clinical Proof", "Item": "BD One-Pager: Heart & Metabolic outperform standards", "Owner": "Hadar/Gil", "Status": "Yellow", "Notes": "Draft using deck AUC/calibration plots"}, {"Priority Area": "Clinical Proof", "Item": "Metabolic Model: add HbA1c, FBG, insulin, DPF, steps", "Owner": "Gil", "Status": "Yellow", "Notes": "Define data pulls & timeline"}, {"Priority Area": "Hiring", "Item": "QA hire", "Owner": "Dani", "Status": "Red", "Notes": "Open requisition"}, {"Priority Area": "Hiring", "Item": "Data Scientist hire", "Owner": "Dani", "Status": "Red", "Notes": "Open requisition"}, {"Priority Area": "Public Narrative", "Item": "Site copy: 'intelligence layer for proactive care' mirrored in decks", "Owner": "Hadar", "Status": "Green", "Notes": "Consistent with board deck messaging"}, {"Priority Area": "Public Narrative", "Item": "Security statement on site (encrypted in transit/at rest, AWS local)", "Owner": "Dor", "Status": "Yellow", "Notes": "Verify matches legal policy docs"}, {"Priority Area": "Public Narrative", "Item": "Health Dashboard & App pages align with current roadmap", "Owner": "Matan", "Status": "Yellow", "Notes": "Ensure features match Q3/Q4 milestones"}];
+
+const areaEl = document.getElementById('filter-area');
+const ownerEl = document.getElementById('filter-owner');
+const statusEl = document.getElementById('filter-status');
+const searchEl = document.getElementById('search');
+const sortEl = document.getElementById('sort');
+const tbody = document.querySelector('#table tbody');
+const countEl = document.getElementById('count');
+
+const uniq = (arr) => [...new Set(arr)].sort();
+const owners = uniq(DATA.map(d => d["Owner"]));
+const areas  = uniq(DATA.map(d => d["Priority Area"]));
+
+owners.forEach(o => { const opt = document.createElement('option'); opt.textContent = o; ownerEl.appendChild(opt); });
+areas.forEach(a => { const opt = document.createElement('option'); opt.textContent = a; areaEl.appendChild(opt); });
+
+function statusRank(s) { return s === 'Red' ? 0 : s === 'Yellow' ? 1 : 2; }
+
+function render() {
+  const q = searchEl.value.toLowerCase();
+  const area = areaEl.value;
+  const owner = ownerEl.value;
+  const status = statusEl.value;
+  const sortKey = sortEl.value;
+
+  let rows = DATA.filter(d => {
+    const searchable = (d["Priority Area"] + " " + d["Item"] + " " + d["Notes"]).toLowerCase();
+    const matchesQ = searchable.includes(q);
+    const matchesArea = !area || d["Priority Area"] === area;
+    const matchesOwner = !owner || d["Owner"] === owner;
+    const matchesStatus = !status || d["Status"] === status;
+    return matchesQ && matchesArea && matchesOwner && matchesStatus;
+  });
+
+  rows.sort((a,b) => {
+    if (sortKey === 'status') return statusRank(a.Status) - statusRank(b.Status);
+    if (sortKey === 'owner') return a.Owner.localeCompare(b.Owner);
+    if (sortKey === 'area') return a["Priority Area"].localeCompare(b["Priority Area"]);
+    return a.Item.localeCompare(b.Item);
+  });
+
+  tbody.innerHTML = '';
+  rows.forEach(d => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${d["Priority Area"]}</td>
+      <td>${d["Item"]}</td>
+      <td>${d["Owner"]}</td>
+      <td><span class="badge ${d["Status"]}">${d["Status"]}</span></td>
+      <td>${d["Notes"]}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  countEl.textContent = rows.length + " items shown";
+}
+
+['input','change'].forEach(evt => {
+  searchEl.addEventListener(evt, render);
+  areaEl.addEventListener(evt, render);
+  ownerEl.addEventListener(evt, render);
+  statusEl.addEventListener(evt, render);
+  sortEl.addEventListener(evt, render);
+});
+
+render();
+</script>
+</body>
+</html>
