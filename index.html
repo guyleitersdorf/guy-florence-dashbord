@@ -23,21 +23,21 @@
     color: var(--text);
   }
   header {
-    padding: 24px;
+    padding: 16px 24px 12px;
     border-bottom: 1px solid var(--border);
     background: rgba(17,24,35,0.7);
     position: sticky;
     top: 0;
     backdrop-filter: blur(8px);
-    z-index: 10;
+    z-index: 20;
   }
-  h1 { margin: 0 0 6px 0; font-size: 20px; }
+  h1 { margin: 0 0 4px 0; font-size: 20px; }
   .subtitle { color: var(--muted); font-size: 12px; }
   .controls {
     display: grid;
     grid-template-columns: repeat(4, minmax(150px, 1fr)) 140px;
-    gap: 12px;
-    margin-top: 14px;
+    gap: 10px;
+    margin-top: 10px;
   }
   select, input {
     width: 100%;
@@ -48,12 +48,13 @@
     border-radius: 10px;
     outline: none;
   }
-  main { padding: 20px; }
+  main { padding: 16px 20px 20px; }
   .table-wrapper {
     overflow: auto;
     border: 1px solid var(--border);
     border-radius: 12px;
     background: var(--card);
+    position: relative;
   }
   table {
     width: 100%;
@@ -62,7 +63,7 @@
   }
   thead th {
     position: sticky;
-    top: 84px;
+    top: 0; /* FIX: keep header row directly under controls */
     background: #0e1523;
     z-index: 5;
   }
@@ -89,7 +90,6 @@
     font-size: 12px;
     margin-top: 10px;
   }
-  .hidden { display: none; }
   .count {
     font-size: 12px;
     color: var(--muted);
@@ -100,7 +100,7 @@
 <body>
 <header>
   <h1>Guy & Florence — Operational Dashboard</h1>
-  <div class="subtitle">Live view • Last updated: 2025-08-08 07:28 UTC</div>
+  <div class="subtitle">Live view • Last updated: 2025-08-08 08:04 UTC</div>
   <div class="controls">
     <input id="search" placeholder="Search items & notes…" />
     <select id="filter-area">
