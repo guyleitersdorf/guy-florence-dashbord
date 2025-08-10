@@ -31,21 +31,24 @@
   .Red { background:rgba(239,68,68,0.18); color:var(--red); border:1px solid rgba(239,68,68,0.5); }
   .count { font-size:12px; color:var(--muted); margin:8px 0; }
   .footer { color:var(--muted); font-size:12px; margin-top:10px; }
+  .banner { margin-top:10px; padding:10px 12px; border-radius:10px; background:#0e1523; color:#9fb3c8; font-size:12px; }
+  a.link { color: var(--accent); text-decoration: none; }
 </style>
 </head>
 <body>
 <header>
   <h1>Guy & Florence — Control Panel</h1>
-  <div class="subtitle">Live view • Last updated: 2025-08-10 00:51 UTC</div>
+  <div class="subtitle">Live view • Last updated: 2025-08-10 01:03 UTC • Build: Static table fallback</div>
   <div class="tabs">
     <div class="tab active" data-target="ops">Operational Dashboard</div>
     <div class="tab" data-target="matrix">Approval Matrix</div>
     <div class="tab" data-target="docs">Supporting Docs</div>
   </div>
+  <div class="banner">This version pre-renders all rows so data shows even if JS is blocked.</div>
 </header>
 <main>
   <section id="ops" class="panel active">
-    <div class="controls">
+    <div class="controls" style="display:none;">
       <input id="search" placeholder="Search items & notes…"/>
       <select id="filter-area"><option value="">All Priority Areas</option></select>
       <select id="filter-owner"><option value="">All Owners</option></select>
@@ -56,133 +59,79 @@
     <div class="table-wrapper">
       <table id="table">
         <thead><tr><th>Priority Area</th><th>Item</th><th>Owner</th><th>Status</th><th>Notes</th></tr></thead>
-        <tbody></tbody>
+        <tbody>
+<tr><td>Financial Context</td><td>Maintain 18-month runway post-VK SAFE &amp; target raise</td><td>Guy</td><td><span class='badge Green'>Green</span></td><td>Runway intact, $1M VK SAFE signed, $1M Atria/Cenegenics targeted</td></tr>
+<tr><td>Financial Context</td><td>Hire API Engineer</td><td>HR/Dani</td><td><span class='badge Yellow'>Yellow</span></td><td>Role approved, hiring in progress</td></tr>
+<tr><td>Financial Context</td><td>Hire Marketing Operator &amp; Digital Marketing Expert</td><td>HR/Dani</td><td><span class='badge Yellow'>Yellow</span></td><td>To start post-funding confirmation</td></tr>
+<tr><td>G&amp;A Rhythm</td><td>Board 1-pager for $1M &amp; $2M ARR scenarios</td><td>Omer</td><td><span class='badge Red'>Red</span></td><td>Not started, high priority for Q3</td></tr>
+<tr><td>G&amp;A Rhythm</td><td>2026 Model ($5M board / $10M sales)</td><td>Omer</td><td><span class='badge Red'>Red</span></td><td>Not started, target Q4</td></tr>
+<tr><td>Ops Execution</td><td>Affiliate Program Launch</td><td>Hadar</td><td><span class='badge Yellow'>Yellow</span></td><td>In progress, Q3 delivery</td></tr>
+<tr><td>Ops Execution</td><td>Mega Affiliate Deal</td><td>Hadar</td><td><span class='badge Red'>Red</span></td><td>Not started, Q3 high impact</td></tr>
+<tr><td>Ops Execution</td><td>Funnel Optimization ($300 CAC target)</td><td>Hadar</td><td><span class='badge Yellow'>Yellow</span></td><td>In progress, tracking conversion</td></tr>
+<tr><td>Tech/Product</td><td>Improve API &amp; Documentation</td><td>Dor/Matan</td><td><span class='badge Yellow'>Yellow</span></td><td>Pending API engineer hire</td></tr>
+<tr><td>Tech/Product</td><td>Top 5 Security Certificates</td><td>Dor/Matan</td><td><span class='badge Red'>Red</span></td><td>Vendor/advisor not yet secured</td></tr>
+<tr><td>Tech/Product</td><td>Performance Monitoring (Top 10 metrics)</td><td>Dor/Matan</td><td><span class='badge Yellow'>Yellow</span></td><td>Metrics defined, dashboard build pending</td></tr>
+<tr><td>Painpoint Fix</td><td>Concise Sales Pitch</td><td>Kayla</td><td><span class='badge Yellow'>Yellow</span></td><td>Draft exists, needs testing</td></tr>
+<tr><td>Painpoint Fix</td><td>Faster Client Adaptations</td><td>Product</td><td><span class='badge Yellow'>Yellow</span></td><td>SLA policy drafted, implementation pending</td></tr>
+<tr><td>Painpoint Fix</td><td>Top 5 Marketing Ads Boost</td><td>Marketing</td><td><span class='badge Red'>Red</span></td><td>Not started</td></tr>
+<tr><td>Painpoint Fix</td><td>$99 Lite Tier</td><td>Product</td><td><span class='badge Green'>Green</span></td><td>In beta scoping</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>US Terms of Use (Paul Hastings review)</td><td>Kayla</td><td><span class='badge Red'>Red</span></td><td>Kickoff pending; align with self-serve launch</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>Self-Serve (all regions) to Goldfarb</td><td>Ofir</td><td><span class='badge Red'>Red</span></td><td>Package &amp; send for review</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>IL Data Processing policy</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Collect feedback from Goldfarb</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>IL Store legal review</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Discuss with Goldfarb</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>IL Team options (board packet)</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Prep for next board cycle</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>Guy salary (50k NIS) draft</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Draft &amp; circulate</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>California registration confirmation</td><td>Omer</td><td><span class='badge Yellow'>Yellow</span></td><td>Confirm receipt from Heather</td></tr>
+<tr><td>Clinical Proof</td><td>BD One-Pager: Heart &amp; Metabolic outperform standards</td><td>Hadar/Gil</td><td><span class='badge Yellow'>Yellow</span></td><td>Draft using deck AUC/calibration plots</td></tr>
+<tr><td>Clinical Proof</td><td>Metabolic Model: add HbA1c, FBG, insulin, DPF, steps</td><td>Gil</td><td><span class='badge Yellow'>Yellow</span></td><td>Define data pulls &amp; timeline</td></tr>
+<tr><td>Hiring</td><td>QA hire</td><td>Dani</td><td><span class='badge Red'>Red</span></td><td>Open requisition</td></tr>
+<tr><td>Hiring</td><td>Data Scientist hire</td><td>Dani</td><td><span class='badge Red'>Red</span></td><td>Open requisition</td></tr>
+<tr><td>Hiring</td><td>Hire Fractional CISO</td><td>Dor</td><td><span class='badge Yellow'>Yellow</span></td><td>Part‑time cyber leadership; risk/compliance/IR readiness; link spec TBD</td></tr>
+<tr><td>Public Narrative</td><td>Site copy: &#39;intelligence layer for proactive care&#39; mirrored in decks</td><td>Hadar</td><td><span class='badge Green'>Green</span></td><td>Consistent with board deck messaging</td></tr>
+<tr><td>Public Narrative</td><td>Security statement on site (encrypted in transit/at rest, AWS local)</td><td>Dor</td><td><span class='badge Yellow'>Yellow</span></td><td>Verify matches legal policy docs</td></tr>
+<tr><td>Public Narrative</td><td>Health Dashboard &amp; App pages align with current roadmap</td><td>Matan</td><td><span class='badge Yellow'>Yellow</span></td><td>Ensure features match Q3/Q4 milestones</td></tr>
+        </tbody>
       </table>
     </div>
-    <div class="footer">Tip: Use filters above to narrow by area, owner, or status. Type to search.</div>
   </section>
 
   <section id="matrix" class="panel">
     <div class="table-wrapper">
       <table id="matrix-table">
         <thead><tr><th>Partner</th><th>Territory</th><th>Service Scope</th><th>Approval Trigger</th><th>Notes</th></tr></thead>
-        <tbody></tbody>
+        <tbody>
+<tr><td>WELL Health</td><td>Canada</td><td>Longevity clinics / wellness services in Exclusive Channel</td><td>If partner in Canada offers competing services → prior written consent from WELL required</td><td>Exclusivity term 5 years; conditional on WELL active offering &amp; sales obligations; Gov law: British Columbia</td></tr>
+        </tbody>
       </table>
     </div>
-    <div class="footer">Add more partners as we ingest agreements (Cenegenics, Clalit, etc.).</div>
   </section>
 
   <section id="docs" class="panel">
     <div class="table-wrapper">
       <table id="docs-table">
         <thead><tr><th>Name</th><th>Owner</th><th>Link</th></tr></thead>
-        <tbody></tbody>
+        <tbody>
+<tr><td>Legal Tracker (latest)</td><td>Dani/Ofir</td><td>(add link)</td></tr>
+<tr><td>Research BD One-Pager (draft)</td><td>Hadar/Gil</td><td>(add link)</td></tr>
+<tr><td>Fractional CISO Spec (draft)</td><td>Dor</td><td>(add link)</td></tr>
+        </tbody>
       </table>
     </div>
-    <div class="footer">Use Google Drive “Anyone with link: Viewer” for quick access. Replace # with your live links.</div>
   </section>
 </main>
 
 <script>
-// Tabs
-document.querySelectorAll('.tab').forEach(function(t) { t.addEventListener('click', function() {
-  document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
-  document.querySelectorAll('.panel').forEach(function(x){ x.classList.remove('active'); });
-  t.classList.add('active');
-  document.getElementById(t.getAttribute('data-target')).classList.add('active');
-}); });
-
-// Data
-const DATA = [{"Priority Area": "Financial Context", "Item": "Maintain 18-month runway post-VK SAFE & target raise", "Owner": "Guy", "Status": "Green", "Notes": "Runway intact, $1M VK SAFE signed, $1M Atria/Cenegenics targeted"}, {"Priority Area": "Financial Context", "Item": "Hire API Engineer", "Owner": "HR/Dani", "Status": "Yellow", "Notes": "Role approved, hiring in progress"}, {"Priority Area": "Financial Context", "Item": "Hire Marketing Operator & Digital Marketing Expert", "Owner": "HR/Dani", "Status": "Yellow", "Notes": "To start post-funding confirmation"}, {"Priority Area": "G&A Rhythm", "Item": "Board 1-pager for $1M & $2M ARR scenarios", "Owner": "Omer", "Status": "Red", "Notes": "Not started, high priority for Q3"}, {"Priority Area": "G&A Rhythm", "Item": "2026 Model ($5M board / $10M sales)", "Owner": "Omer", "Status": "Red", "Notes": "Not started, target Q4"}, {"Priority Area": "Ops Execution", "Item": "Affiliate Program Launch", "Owner": "Hadar", "Status": "Yellow", "Notes": "In progress, Q3 delivery"}, {"Priority Area": "Ops Execution", "Item": "Mega Affiliate Deal", "Owner": "Hadar", "Status": "Red", "Notes": "Not started, Q3 high impact"}, {"Priority Area": "Ops Execution", "Item": "Funnel Optimization ($300 CAC target)", "Owner": "Hadar", "Status": "Yellow", "Notes": "In progress, tracking conversion"}, {"Priority Area": "Tech/Product", "Item": "Improve API & Documentation", "Owner": "Dor/Matan", "Status": "Yellow", "Notes": "Pending API engineer hire"}, {"Priority Area": "Tech/Product", "Item": "Top 5 Security Certificates", "Owner": "Dor/Matan", "Status": "Red", "Notes": "Vendor/advisor not yet secured"}, {"Priority Area": "Tech/Product", "Item": "Performance Monitoring (Top 10 metrics)", "Owner": "Dor/Matan", "Status": "Yellow", "Notes": "Metrics defined, dashboard build pending"}, {"Priority Area": "Painpoint Fix", "Item": "Concise Sales Pitch", "Owner": "Kayla", "Status": "Yellow", "Notes": "Draft exists, needs testing"}, {"Priority Area": "Painpoint Fix", "Item": "Faster Client Adaptations", "Owner": "Product", "Status": "Yellow", "Notes": "SLA policy drafted, implementation pending"}, {"Priority Area": "Painpoint Fix", "Item": "Top 5 Marketing Ads Boost", "Owner": "Marketing", "Status": "Red", "Notes": "Not started"}, {"Priority Area": "Painpoint Fix", "Item": "$99 Lite Tier", "Owner": "Product", "Status": "Green", "Notes": "In beta scoping"}, {"Priority Area": "Legal & Compliance", "Item": "US Terms of Use (Paul Hastings review)", "Owner": "Kayla", "Status": "Red", "Notes": "Kickoff pending; align with self-serve launch"}, {"Priority Area": "Legal & Compliance", "Item": "Self-Serve (all regions) to Goldfarb", "Owner": "Ofir", "Status": "Red", "Notes": "Package & send for review"}, {"Priority Area": "Legal & Compliance", "Item": "IL Data Processing policy", "Owner": "Ofir", "Status": "Yellow", "Notes": "Collect feedback from Goldfarb"}, {"Priority Area": "Legal & Compliance", "Item": "IL Store legal review", "Owner": "Ofir", "Status": "Yellow", "Notes": "Discuss with Goldfarb"}, {"Priority Area": "Legal & Compliance", "Item": "IL Team options (board packet)", "Owner": "Ofir", "Status": "Yellow", "Notes": "Prep for next board cycle"}, {"Priority Area": "Legal & Compliance", "Item": "Guy salary (50k NIS) draft", "Owner": "Ofir", "Status": "Yellow", "Notes": "Draft & circulate"}, {"Priority Area": "Legal & Compliance", "Item": "California registration confirmation", "Owner": "Omer", "Status": "Yellow", "Notes": "Confirm receipt from Heather"}, {"Priority Area": "Clinical Proof", "Item": "BD One-Pager: Heart & Metabolic outperform standards", "Owner": "Hadar/Gil", "Status": "Yellow", "Notes": "Draft using deck AUC/calibration plots"}, {"Priority Area": "Clinical Proof", "Item": "Metabolic Model: add HbA1c, FBG, insulin, DPF, steps", "Owner": "Gil", "Status": "Yellow", "Notes": "Define data pulls & timeline"}, {"Priority Area": "Hiring", "Item": "QA hire", "Owner": "Dani", "Status": "Red", "Notes": "Open requisition"}, {"Priority Area": "Hiring", "Item": "Data Scientist hire", "Owner": "Dani", "Status": "Red", "Notes": "Open requisition"}, {"Priority Area": "Hiring", "Item": "Hire Fractional CISO", "Owner": "Dor", "Status": "Yellow", "Notes": "Part\u2011time cyber leadership; risk/compliance/IR readiness; link spec TBD"}, {"Priority Area": "Public Narrative", "Item": "Site copy: 'intelligence layer for proactive care' mirrored in decks", "Owner": "Hadar", "Status": "Green", "Notes": "Consistent with board deck messaging"}, {"Priority Area": "Public Narrative", "Item": "Security statement on site (encrypted in transit/at rest, AWS local)", "Owner": "Dor", "Status": "Yellow", "Notes": "Verify matches legal policy docs"}, {"Priority Area": "Public Narrative", "Item": "Health Dashboard & App pages align with current roadmap", "Owner": "Matan", "Status": "Yellow", "Notes": "Ensure features match Q3/Q4 milestones"}];
-const MATRIX = [{"Partner": "WELL Health", "Territory": "Canada", "Service Scope": "Longevity clinics / wellness services in Exclusive Channel", "Approval Trigger": "If partner in Canada offers competing services \u2192 prior written consent from WELL required", "Notes": "Exclusivity term 5 years; conditional on WELL active offering & sales obligations; Gov law: British Columbia"}];
-const DOCS = [{"Name": "Legal Tracker (latest)", "Owner": "Dani/Ofir", "Link": "#"}, {"Name": "Research BD One-Pager (draft)", "Owner": "Hadar/Gil", "Link": "#"}, {"Name": "Fractional CISO Spec (draft)", "Owner": "Dor", "Link": "#"}];
-
-// Populate Ops table + filters
-const areaEl = document.getElementById('filter-area');
-const ownerEl = document.getElementById('filter-owner');
-const statusEl = document.getElementById('filter-status');
-const searchEl = document.getElementById('search');
-const sortEl = document.getElementById('sort');
-const tbody = document.querySelector('#table tbody');
-const countEl = document.getElementById('count');
-
-function uniq(arr){ return Array.from(new Set(arr)).sort(); }
-const owners = uniq(DATA.map(d => d["Owner"]));
-const areas  = uniq(DATA.map(d => d["Priority Area"]));
-
-owners.forEach(function(o){ var opt=document.createElement('option'); opt.textContent=o; ownerEl.appendChild(opt); });
-areas.forEach(function(a){ var opt=document.createElement('option'); opt.textContent=a; areaEl.appendChild(opt); });
-
-function statusRank(s){ return s === 'Red' ? 0 : (s === 'Yellow' ? 1 : 2); }
-
-function renderOps(){
-  const q = searchEl.value.toLowerCase();
-  const area = areaEl.value;
-  const owner = ownerEl.value;
-  const status = statusEl.value;
-  const sortKey = sortEl.value;
-
-  var rows = DATA.filter(function(d){
-    var searchable = (d["Priority Area"] + " " + d["Item"] + " " + d["Notes"]).toLowerCase();
-    var matchesQ = searchable.includes(q);
-    var matchesArea = !area || d["Priority Area"] === area;
-    var matchesOwner = !owner || d["Owner"] === owner;
-    var matchesStatus = !status || d["Status"] === status;
-    return matchesQ && matchesArea && matchesOwner && matchesStatus;
-  });
-
-  rows.sort(function(a,b){
-    if (sortKey === 'status') return statusRank(a.Status) - statusRank(b.Status);
-    if (sortKey === 'owner') return a.Owner.localeCompare(b.Owner);
-    if (sortKey === 'area') return a["Priority Area"].localeCompare(b["Priority Area"]);
-    return a.Item.localeCompare(b.Item);
-  });
-
-  tbody.innerHTML = '';
-  rows.forEach(function(d){
-    var tr = document.createElement('tr');
-    tr.innerHTML = '<td>'+d["Priority Area"]+'</td>'+
-                   '<td>'+d["Item"]+'</td>'+
-                   '<td>'+d["Owner"]+'</td>'+
-                   '<td><span class="badge '+d["Status"]+'">'+d["Status"]+'</span></td>'+
-                   '<td>'+d["Notes"]+'</td>';
-    tbody.appendChild(tr);
-  });
-  countEl.textContent = rows.length + " items shown";
-}
-
-['input','change'].forEach(function(evt){
-  searchEl.addEventListener(evt, renderOps);
-  areaEl.addEventListener(evt, renderOps);
-  ownerEl.addEventListener(evt, renderOps);
-  statusEl.addEventListener(evt, renderOps);
-  sortEl.addEventListener(evt, renderOps);
-});
-
-renderOps();
-
-// Populate Approval Matrix
-const mBody = document.querySelector('#matrix-table tbody');
-MATRIX.forEach(function(d){
-  var tr = document.createElement('tr');
-  tr.innerHTML = '<td>'+d["Partner"]+'</td>'+
-                 '<td>'+d["Territory"]+'</td>'+
-                 '<td>'+d["Service Scope"]+'</td>'+
-                 '<td>'+d["Approval Trigger"]+'</td>'+
-                 '<td>'+d["Notes"]+'</td>';
-  mBody.appendChild(tr);
-});
-
-// Populate Supporting Docs
-const dBody = document.querySelector('#docs-table tbody');
-DOCS.forEach(function(d){
-  var tr = document.createElement('tr');
-  var link = d["Link"] === "#" ? "#" : d["Link"];
-  tr.innerHTML = '<td>'+d["Name"]+'</td>'+
-                 '<td>'+d["Owner"]+'</td>'+
-                 '<td>'+ (link === "#" ? "(add link)" : "<a class=\"link\" href=\""+link+\"" target=\"_blank\">Open</a>") +'</td>';
-  dBody.appendChild(tr);
-});
+// Simple tabs (no braces in template to avoid parser issues)
+var tabs = document.querySelectorAll('.tab');
+for (var i=0;i<tabs.length;i++) {{
+  tabs[i].addEventListener('click', function() {{
+    for (var j=0;j<tabs.length;j++) tabs[j].classList.remove('active');
+    var panels = document.querySelectorAll('.panel');
+    for (var k=0;k<panels.length;k++) panels[k].classList.remove('active');
+    this.classList.add('active');
+    document.getElementById(this.getAttribute('data-target')).classList.add('active');
+  }});
+}}
 </script>
 </body>
 </html>
