@@ -1,81 +1,168 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guy & Florence — Priority View</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Longevity AI — Mission in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#0b0f14; --card:#111823; --text:#e6eef7; --muted:#9fb3c8; --green:#22c55e; --yellow:#f59e0b; --red:#ef4444; --border:#223044; --accent:#60a5fa; }
-  body { margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:linear-gradient(180deg,#0b1120,#0b0f14); color:var(--text);}
-  header { padding:16px 24px; border-bottom:1px solid var(--border); background:rgba(17,24,35,.7); position:sticky; top:0; backdrop-filter:blur(8px); z-index:50;}
-  h1 { margin:0; font-size:20px; }
-  .subtitle { color:var(--muted); font-size:12px; margin-top:4px; }
-  main { padding:16px 20px; }
-  .table-wrapper { overflow:auto; border:1px solid var(--border); border-radius:12px; background:var(--card);}
-  table { width:100%; border-collapse:collapse; font-size:14px; }
-  thead th { position:sticky; top:0; background:#0e1523; z-index:5; }
-  th, td { padding:12px 16px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; }
+  /* Swap colors below with exact brand hex from the brand book when ready */
+  :root {
+    --bg: #0a0d18;
+    --card: #0f1625;
+    --text: #e8eef9;
+    --muted: #9fb3c8;
+    --border: #223044;
+    --accent: #4c78ff;     /* brand primary (placeholder) */
+    --accent-2: #00c2a8;   /* brand secondary (placeholder) */
+    --ontrack: #22c55e;    /* status colors aligned to brand intent */
+    --attention: #f59e0b;
+    --risk: #ef4444;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: linear-gradient(180deg,#0b1120,#0a0d18); color: var(--text);}
+  header {
+    padding: 16px 24px; border-bottom: 1px solid var(--border); background: rgba(15,22,37,.72);
+    position: sticky; top: 0; backdrop-filter: blur(8px); z-index: 50; display:flex; align-items:center; gap:12px;
+  }
+  .logo {
+    width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display:inline-flex; align-items:center; justify-content:center; font-weight:800; color:#fff; letter-spacing:.5px;
+  }
+  .brand {
+    display:flex; flex-direction:column;
+  }
+  h1 { margin: 0; font-size: 18px; line-height:1.2; }
+  .subtitle { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  nav.tabs { margin-left:auto; display:flex; gap:10px; flex-wrap:wrap; }
+  .tab { padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; user-select: none; color: var(--muted);}
+  .tab.active { color: var(--text); border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  main { padding: 16px 20px; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .table-wrapper { overflow: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--card);}
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th { position: sticky; top: 0; background: #0f1526; z-index: 5; }
+  th, td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
   .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-weight:700; font-size:12px; letter-spacing:.3px; }
-  .Green { background: rgba(34,197,94,0.18); color: var(--green); border: 1px solid rgba(34,197,94,0.5);}
-  .Yellow { background: rgba(245,158,11,0.18); color: var(--yellow); border: 1px solid rgba(245,158,11,0.5);}
-  .Red { background: rgba(239,68,68,0.18); color: var(--red); border: 1px solid rgba(239,68,68,0.5);}
-  .note { color:var(--muted); font-size:12px; margin-top:8px; }
+  .Green { background: rgba(34,197,94,0.18); color: var(--ontrack); border: 1px solid rgba(34,197,94,0.5); }
+  .Yellow { background: rgba(245,158,11,0.18); color: var(--attention); border: 1px solid rgba(245,158,11,0.5); }
+  .Red { background: rgba(239,68,68,0.18); color: var(--risk); border: 1px solid rgba(239,68,68,0.5); }
+  a.link { color: var(--accent); text-decoration: none; }
+  .section-title { margin: 0 0 12px 2px; font-weight:700; }
+
+  /* Small screen tweaks */
+  @media (max-width: 640px) {
+    header { flex-wrap:wrap; gap:8px; }
+    nav.tabs { width:100%; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>Guy & Florence — Priority View</h1>
-  <div class="subtitle">Last updated: 2025-08-10 01:07 UTC. Sorted by priority: P1 (Red), P2 (Yellow), P3 (Green).</div>
-</header>
-<main>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Priority</th>
-          <th>Priority Area</th>
-          <th>Item</th>
-          <th>Owner</th>
-          <th>Status</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-<tr><td>P1 — Critical</td><td>G&amp;A Rhythm</td><td>Board 1-pager for $1M &amp; $2M ARR scenarios</td><td>Omer</td><td><span class='badge Red'>Red</span></td><td>Not started, high priority for Q3</td></tr>
-<tr><td>P1 — Critical</td><td>G&amp;A Rhythm</td><td>2026 Model ($5M board / $10M sales)</td><td>Omer</td><td><span class='badge Red'>Red</span></td><td>Not started, target Q4</td></tr>
-<tr><td>P1 — Critical</td><td>Ops Execution</td><td>Mega Affiliate Deal</td><td>Hadar</td><td><span class='badge Red'>Red</span></td><td>Not started, Q3 high impact</td></tr>
-<tr><td>P1 — Critical</td><td>Tech/Product</td><td>Top 5 Security Certificates</td><td>Dor/Matan</td><td><span class='badge Red'>Red</span></td><td>Vendor/advisor not yet secured</td></tr>
-<tr><td>P1 — Critical</td><td>Painpoint Fix</td><td>Top 5 Marketing Ads Boost</td><td>Marketing</td><td><span class='badge Red'>Red</span></td><td>Not started</td></tr>
-<tr><td>P1 — Critical</td><td>Legal &amp; Compliance</td><td>US Terms of Use (Paul Hastings review)</td><td>Kayla</td><td><span class='badge Red'>Red</span></td><td>Kickoff pending; align with self-serve launch</td></tr>
-<tr><td>P1 — Critical</td><td>Legal &amp; Compliance</td><td>Self-Serve (all regions) to Goldfarb</td><td>Ofir</td><td><span class='badge Red'>Red</span></td><td>Package &amp; send for review</td></tr>
-<tr><td>P1 — Critical</td><td>Hiring</td><td>QA hire</td><td>Dani</td><td><span class='badge Red'>Red</span></td><td>Open requisition</td></tr>
-<tr><td>P1 — Critical</td><td>Hiring</td><td>Data Scientist hire</td><td>Dani</td><td><span class='badge Red'>Red</span></td><td>Open requisition</td></tr>
-<tr><td>P2 — Important</td><td>Financial Context</td><td>Hire API Engineer</td><td>HR/Dani</td><td><span class='badge Yellow'>Yellow</span></td><td>Role approved, hiring in progress</td></tr>
-<tr><td>P2 — Important</td><td>Financial Context</td><td>Hire Marketing Operator &amp; Digital Marketing Expert</td><td>HR/Dani</td><td><span class='badge Yellow'>Yellow</span></td><td>To start post-funding confirmation</td></tr>
-<tr><td>P2 — Important</td><td>Ops Execution</td><td>Affiliate Program Launch</td><td>Hadar</td><td><span class='badge Yellow'>Yellow</span></td><td>In progress, Q3 delivery</td></tr>
-<tr><td>P2 — Important</td><td>Ops Execution</td><td>Funnel Optimization ($300 CAC target)</td><td>Hadar</td><td><span class='badge Yellow'>Yellow</span></td><td>In progress, tracking conversion</td></tr>
-<tr><td>P2 — Important</td><td>Tech/Product</td><td>Improve API &amp; Documentation</td><td>Dor/Matan</td><td><span class='badge Yellow'>Yellow</span></td><td>Pending API engineer hire</td></tr>
-<tr><td>P2 — Important</td><td>Tech/Product</td><td>Performance Monitoring (Top 10 metrics)</td><td>Dor/Matan</td><td><span class='badge Yellow'>Yellow</span></td><td>Metrics defined, dashboard build pending</td></tr>
-<tr><td>P2 — Important</td><td>Painpoint Fix</td><td>Concise Sales Pitch</td><td>Kayla</td><td><span class='badge Yellow'>Yellow</span></td><td>Draft exists, needs testing</td></tr>
-<tr><td>P2 — Important</td><td>Painpoint Fix</td><td>Faster Client Adaptations</td><td>Product</td><td><span class='badge Yellow'>Yellow</span></td><td>SLA policy drafted, implementation pending</td></tr>
-<tr><td>P2 — Important</td><td>Legal &amp; Compliance</td><td>IL Data Processing policy</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Collect feedback from Goldfarb</td></tr>
-<tr><td>P2 — Important</td><td>Legal &amp; Compliance</td><td>IL Store legal review</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Discuss with Goldfarb</td></tr>
-<tr><td>P2 — Important</td><td>Legal &amp; Compliance</td><td>IL Team options (board packet)</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Prep for next board cycle</td></tr>
-<tr><td>P2 — Important</td><td>Legal &amp; Compliance</td><td>Guy salary (50k NIS) draft</td><td>Ofir</td><td><span class='badge Yellow'>Yellow</span></td><td>Draft &amp; circulate</td></tr>
-<tr><td>P2 — Important</td><td>Legal &amp; Compliance</td><td>California registration confirmation</td><td>Omer</td><td><span class='badge Yellow'>Yellow</span></td><td>Confirm receipt from Heather</td></tr>
-<tr><td>P2 — Important</td><td>Clinical Proof</td><td>BD One-Pager: Heart &amp; Metabolic outperform standards</td><td>Hadar/Gil</td><td><span class='badge Yellow'>Yellow</span></td><td>Draft using deck AUC/calibration plots</td></tr>
-<tr><td>P2 — Important</td><td>Clinical Proof</td><td>Metabolic Model: add HbA1c, FBG, insulin, DPF, steps</td><td>Gil</td><td><span class='badge Yellow'>Yellow</span></td><td>Define data pulls &amp; timeline</td></tr>
-<tr><td>P2 — Important</td><td>Hiring</td><td>Hire Fractional CISO</td><td>Dor</td><td><span class='badge Yellow'>Yellow</span></td><td>Part‑time cyber leadership; risk/compliance/IR readiness; link spec TBD</td></tr>
-<tr><td>P2 — Important</td><td>Public Narrative</td><td>Security statement on site (encrypted in transit/at rest, AWS local)</td><td>Dor</td><td><span class='badge Yellow'>Yellow</span></td><td>Verify matches legal policy docs</td></tr>
-<tr><td>P2 — Important</td><td>Public Narrative</td><td>Health Dashboard &amp; App pages align with current roadmap</td><td>Matan</td><td><span class='badge Yellow'>Yellow</span></td><td>Ensure features match Q3/Q4 milestones</td></tr>
-<tr><td>P3 — Normal</td><td>Financial Context</td><td>Maintain 18-month runway post-VK SAFE &amp; target raise</td><td>Guy</td><td><span class='badge Green'>Green</span></td><td>Runway intact, $1M VK SAFE signed, $1M Atria/Cenegenics targeted</td></tr>
-<tr><td>P3 — Normal</td><td>Painpoint Fix</td><td>$99 Lite Tier</td><td>Product</td><td><span class='badge Green'>Green</span></td><td>In beta scoping</td></tr>
-<tr><td>P3 — Normal</td><td>Public Narrative</td><td>Site copy: &#39;intelligence layer for proactive care&#39; mirrored in decks</td><td>Hadar</td><td><span class='badge Green'>Green</span></td><td>Consistent with board deck messaging</td></tr>
+  <header>
+    <!-- Swap this with your real logo img src when ready -->
+    <div class="logo">LAI</div>
+    <div class="brand">
+      <h1>Longevity AI — Mission in Motion</h1>
+      <div class="subtitle">Live view • Last updated: 2025-08-10 01:12 UTC</div>
+    </div>
+    <nav class="tabs">
+      <div class="tab active" data-target="ops">Mission in Motion</div>
+      <div class="tab" data-target="matrix">Strategic Partnerships</div>
+      <div class="tab" data-target="docs">Knowledge Base</div>
+    </nav>
+  </header>
 
-      </tbody>
-    </table>
-  </div>
-  <p class="note">Tip: Want me to break P1 into “This week” vs “This month”? Say the word and I’ll split & re‑order.</p>
-</main>
+  <main>
+    <!-- Operational Dashboard -->
+    <section id="ops" class="panel active">
+      <h2 class="section-title">Operational Priorities</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Priority Area</th><th>Item</th><th>Owner</th><th>Status</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+<tr><td>Financial Context</td><td>Maintain 18-month runway post-VK SAFE &amp; target raise</td><td>Guy</td><td><span class='badge Green'>On Track</span></td><td>Runway intact, $1M VK SAFE signed, $1M Atria/Cenegenics targeted</td></tr>
+<tr><td>Financial Context</td><td>Hire API Engineer</td><td>HR/Dani</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Role approved, hiring in progress</td></tr>
+<tr><td>Financial Context</td><td>Hire Marketing Operator &amp; Digital Marketing Expert</td><td>HR/Dani</td><td><span class='badge Yellow'>Needs Attention</span></td><td>To start post-funding confirmation</td></tr>
+<tr><td>G&amp;A Rhythm</td><td>Board 1-pager for $1M &amp; $2M ARR scenarios</td><td>Omer</td><td><span class='badge Red'>At Risk</span></td><td>Not started, high priority for Q3</td></tr>
+<tr><td>G&amp;A Rhythm</td><td>2026 Model ($5M board / $10M sales)</td><td>Omer</td><td><span class='badge Red'>At Risk</span></td><td>Not started, target Q4</td></tr>
+<tr><td>Ops Execution</td><td>Affiliate Program Launch</td><td>Hadar</td><td><span class='badge Yellow'>Needs Attention</span></td><td>In progress, Q3 delivery</td></tr>
+<tr><td>Ops Execution</td><td>Mega Affiliate Deal</td><td>Hadar</td><td><span class='badge Red'>At Risk</span></td><td>Not started, Q3 high impact</td></tr>
+<tr><td>Ops Execution</td><td>Funnel Optimization ($300 CAC target)</td><td>Hadar</td><td><span class='badge Yellow'>Needs Attention</span></td><td>In progress, tracking conversion</td></tr>
+<tr><td>Tech/Product</td><td>Improve API &amp; Documentation</td><td>Dor/Matan</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Pending API engineer hire</td></tr>
+<tr><td>Tech/Product</td><td>Top 5 Security Certificates</td><td>Dor/Matan</td><td><span class='badge Red'>At Risk</span></td><td>Vendor/advisor not yet secured</td></tr>
+<tr><td>Tech/Product</td><td>Performance Monitoring (Top 10 metrics)</td><td>Dor/Matan</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Metrics defined, dashboard build pending</td></tr>
+<tr><td>Painpoint Fix</td><td>Concise Sales Pitch</td><td>Kayla</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Draft exists, needs testing</td></tr>
+<tr><td>Painpoint Fix</td><td>Faster Client Adaptations</td><td>Product</td><td><span class='badge Yellow'>Needs Attention</span></td><td>SLA policy drafted, implementation pending</td></tr>
+<tr><td>Painpoint Fix</td><td>Top 5 Marketing Ads Boost</td><td>Marketing</td><td><span class='badge Red'>At Risk</span></td><td>Not started</td></tr>
+<tr><td>Painpoint Fix</td><td>$99 Lite Tier</td><td>Product</td><td><span class='badge Green'>On Track</span></td><td>In beta scoping</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>US Terms of Use (Paul Hastings review)</td><td>Kayla</td><td><span class='badge Red'>At Risk</span></td><td>Kickoff pending; align with self-serve launch</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>Self-Serve (all regions) to Goldfarb</td><td>Ofir</td><td><span class='badge Red'>At Risk</span></td><td>Package &amp; send for review</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>IL Data Processing policy</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Collect feedback from Goldfarb</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>IL Store legal review</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Discuss with Goldfarb</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>IL Team options (board packet)</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Prep for next board cycle</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>Guy salary (50k NIS) draft</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Draft &amp; circulate</td></tr>
+<tr><td>Legal &amp; Compliance</td><td>California registration confirmation</td><td>Omer</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Confirm receipt from Heather</td></tr>
+<tr><td>Clinical Proof</td><td>BD One-Pager: Heart &amp; Metabolic outperform standards</td><td>Hadar/Gil</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Draft using deck AUC/calibration plots</td></tr>
+<tr><td>Clinical Proof</td><td>Metabolic Model: add HbA1c, FBG, insulin, DPF, steps</td><td>Gil</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Define data pulls &amp; timeline</td></tr>
+<tr><td>Hiring</td><td>QA hire</td><td>Dani</td><td><span class='badge Red'>At Risk</span></td><td>Open requisition</td></tr>
+<tr><td>Hiring</td><td>Data Scientist hire</td><td>Dani</td><td><span class='badge Red'>At Risk</span></td><td>Open requisition</td></tr>
+<tr><td>Hiring</td><td>Hire Fractional CISO</td><td>Dor</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Part‑time cyber leadership; risk/compliance/IR readiness; link spec TBD</td></tr>
+<tr><td>Public Narrative</td><td>Site copy: &#39;intelligence layer for proactive care&#39; mirrored in decks</td><td>Hadar</td><td><span class='badge Green'>On Track</span></td><td>Consistent with board deck messaging</td></tr>
+<tr><td>Public Narrative</td><td>Security statement on site (encrypted in transit/at rest, AWS local)</td><td>Dor</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Verify matches legal policy docs</td></tr>
+<tr><td>Public Narrative</td><td>Health Dashboard &amp; App pages align with current roadmap</td><td>Matan</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Ensure features match Q3/Q4 milestones</td></tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Approval Matrix -->
+    <section id="matrix" class="panel">
+      <h2 class="section-title">Strategic Partnerships</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Partner</th><th>Territory</th><th>Service Scope</th><th>Approval Trigger</th><th>Notes</th></tr></thead>
+          <tbody>
+<tr><td>WELL Health</td><td>Canada</td><td>Longevity clinics / wellness services in Exclusive Channel</td><td>If partner in Canada offers competing services → prior written consent from WELL required</td><td>Exclusivity term 5 years; conditional on WELL active offering &amp; sales obligations; Gov law: British Columbia</td></tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Supporting Docs -->
+    <section id="docs" class="panel">
+      <h2 class="section-title">Knowledge Base</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Name</th><th>Owner</th><th>Link</th></tr></thead>
+          <tbody>
+<tr><td>Legal Tracker (latest)</td><td>Dani/Ofir</td><td>(add link)</td></tr>
+<tr><td>Research BD One-Pager (draft)</td><td>Hadar/Gil</td><td>(add link)</td></tr>
+<tr><td>Fractional CISO Spec (draft)</td><td>Dor</td><td>(add link)</td></tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+<script>
+// Tabs (plain JS)
+var tabs = document.querySelectorAll('.tab');
+for (var i=0;i<tabs.length;i++) {
+  tabs[i].addEventListener('click', function() {
+    for (var j=0;j<tabs.length;j++) tabs[j].classList.remove('active');
+    var panels = document.querySelectorAll('.panel');
+    for (var k=0;k<panels.length;k++) panels[k].classList.remove('active');
+    this.classList.add('active');
+    document.getElementById(this.getAttribute('data-target')).classList.add('active');
+  });
+}
+</script>
 </body>
 </html>
