@@ -6,32 +6,26 @@
 <title>Longevity AI — Mission in Motion</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Swap colors below with exact brand hex from the brand book when ready */
   :root {
     --bg: #0a0d18;
     --card: #0f1625;
     --text: #e8eef9;
     --muted: #9fb3c8;
     --border: #223044;
-    --accent: #4c78ff;     /* brand primary (placeholder) */
-    --accent-2: #00c2a8;   /* brand secondary (placeholder) */
-    --ontrack: #22c55e;    /* status colors aligned to brand intent */
-    --attention: #f59e0b;
-    --risk: #ef4444;
+    --accent: #242aaf; /* sample brand blue from logo bg */
+    --accent-2: #00c2a8;
+    --p1: #ef4444;
+    --p2: #f59e0b;
+    --p3: #22c55e;
   }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: linear-gradient(180deg,#0b1120,#0a0d18); color: var(--text);}
   header {
-    padding: 16px 24px; border-bottom: 1px solid var(--border); background: rgba(15,22,37,.72);
+    padding: 12px 16px; border-bottom: 1px solid var(--border); background: rgba(15,22,37,.72);
     position: sticky; top: 0; backdrop-filter: blur(8px); z-index: 50; display:flex; align-items:center; gap:12px;
   }
-  .logo {
-    width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    display:inline-flex; align-items:center; justify-content:center; font-weight:800; color:#fff; letter-spacing:.5px;
-  }
-  .brand {
-    display:flex; flex-direction:column;
-  }
+  .logo-img { width: 28px; height: 28px; border-radius: 6px; background:#242aaf; display:inline-block; }
+  .brand { display:flex; flex-direction:column; }
   h1 { margin: 0; font-size: 18px; line-height:1.2; }
   .subtitle { color: var(--muted); font-size: 12px; margin-top: 2px; }
   nav.tabs { margin-left:auto; display:flex; gap:10px; flex-wrap:wrap; }
@@ -45,27 +39,30 @@
   thead th { position: sticky; top: 0; background: #0f1526; z-index: 5; }
   th, td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
   tr:hover td { background: rgba(255,255,255,0.02); }
-  .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-weight:700; font-size:12px; letter-spacing:.3px; }
-  .Green { background: rgba(34,197,94,0.18); color: var(--ontrack); border: 1px solid rgba(34,197,94,0.5); }
-  .Yellow { background: rgba(245,158,11,0.18); color: var(--attention); border: 1px solid rgba(245,158,11,0.5); }
-  .Red { background: rgba(239,68,68,0.18); color: var(--risk); border: 1px solid rgba(239,68,68,0.5); }
   a.link { color: var(--accent); text-decoration: none; }
   .section-title { margin: 0 0 12px 2px; font-weight:700; }
 
-  /* Small screen tweaks */
+  .filters { display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:10px; margin-bottom:10px; }
+  .filters input, .filters select { width:100%; padding:10px 12px; border:1px solid var(--border); background:#0b1320; color:var(--text); border-radius:10px; outline:none; }
+
+  .prio { display:inline-block; width:24px; height:24px; border-radius:50%; line-height:24px; text-align:center; font-weight:800; font-size:12px; margin-right:8px; }
+  .p1 { background: rgba(239,68,68,0.18); color: var(--p1); border:1px solid rgba(239,68,68,0.5); }
+  .p2 { background: rgba(245,158,11,0.18); color: var(--p2); border:1px solid rgba(245,158,11,0.5); }
+  .p3 { background: rgba(34,197,94,0.18); color: var(--p3); border:1px solid rgba(34,197,94,0.5); }
+
+  /* Small screen */
   @media (max-width: 640px) {
-    header { flex-wrap:wrap; gap:8px; }
+    .filters { grid-template-columns: 1fr 1fr; }
     nav.tabs { width:100%; }
   }
 </style>
 </head>
 <body>
   <header>
-    <!-- Swap this with your real logo img src when ready -->
-    <div class="logo">LAI</div>
+    <img class="logo-img" src="data:image/png;base64,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" alt="Longevity AI Logo"/>
     <div class="brand">
       <h1>Longevity AI — Mission in Motion</h1>
-      <div class="subtitle">Live view • Last updated: 2025-08-10 01:12 UTC</div>
+      <div class="subtitle">Live view • Last updated: 2025-08-10 01:16 UTC</div>
     </div>
     <nav class="tabs">
       <div class="tab active" data-target="ops">Mission in Motion</div>
@@ -78,42 +75,54 @@
     <!-- Operational Dashboard -->
     <section id="ops" class="panel active">
       <h2 class="section-title">Operational Priorities</h2>
+
+      <div class="filters">
+        <input id="search" placeholder="Search items & notes…">
+        <select id="filter-area"><option value=''>All Areas</option><option>Clinical Proof</option><option>Financial Context</option><option>G&amp;A Rhythm</option><option>Hiring</option><option>Legal &amp; Compliance</option><option>Ops Execution</option><option>Painpoint Fix</option><option>Public Narrative</option><option>Tech/Product</option></select>
+        <select id="filter-owner"><option value=''>All Owners</option><option>Dani</option><option>Dor</option><option>Dor/Matan</option><option>Gil</option><option>Guy</option><option>HR/Dani</option><option>Hadar</option><option>Hadar/Gil</option><option>Kayla</option><option>Marketing</option><option>Matan</option><option>Ofir</option><option>Omer</option><option>Product</option></select>
+        <select id="filter-priority">
+          <option value="">All Priorities</option>
+          <option value="1">P1 — Critical</option>
+          <option value="2">P2 — Important</option>
+          <option value="3">P3 — Normal</option>
+        </select>
+      </div>
       <div class="table-wrapper">
-        <table>
+        <table id="ops-table">
           <thead>
-            <tr><th>Priority Area</th><th>Item</th><th>Owner</th><th>Status</th><th>Notes</th></tr>
+            <tr><th>Priority</th><th>Area</th><th>Item</th><th>Owner</th><th>Notes</th></tr>
           </thead>
           <tbody>
-<tr><td>Financial Context</td><td>Maintain 18-month runway post-VK SAFE &amp; target raise</td><td>Guy</td><td><span class='badge Green'>On Track</span></td><td>Runway intact, $1M VK SAFE signed, $1M Atria/Cenegenics targeted</td></tr>
-<tr><td>Financial Context</td><td>Hire API Engineer</td><td>HR/Dani</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Role approved, hiring in progress</td></tr>
-<tr><td>Financial Context</td><td>Hire Marketing Operator &amp; Digital Marketing Expert</td><td>HR/Dani</td><td><span class='badge Yellow'>Needs Attention</span></td><td>To start post-funding confirmation</td></tr>
-<tr><td>G&amp;A Rhythm</td><td>Board 1-pager for $1M &amp; $2M ARR scenarios</td><td>Omer</td><td><span class='badge Red'>At Risk</span></td><td>Not started, high priority for Q3</td></tr>
-<tr><td>G&amp;A Rhythm</td><td>2026 Model ($5M board / $10M sales)</td><td>Omer</td><td><span class='badge Red'>At Risk</span></td><td>Not started, target Q4</td></tr>
-<tr><td>Ops Execution</td><td>Affiliate Program Launch</td><td>Hadar</td><td><span class='badge Yellow'>Needs Attention</span></td><td>In progress, Q3 delivery</td></tr>
-<tr><td>Ops Execution</td><td>Mega Affiliate Deal</td><td>Hadar</td><td><span class='badge Red'>At Risk</span></td><td>Not started, Q3 high impact</td></tr>
-<tr><td>Ops Execution</td><td>Funnel Optimization ($300 CAC target)</td><td>Hadar</td><td><span class='badge Yellow'>Needs Attention</span></td><td>In progress, tracking conversion</td></tr>
-<tr><td>Tech/Product</td><td>Improve API &amp; Documentation</td><td>Dor/Matan</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Pending API engineer hire</td></tr>
-<tr><td>Tech/Product</td><td>Top 5 Security Certificates</td><td>Dor/Matan</td><td><span class='badge Red'>At Risk</span></td><td>Vendor/advisor not yet secured</td></tr>
-<tr><td>Tech/Product</td><td>Performance Monitoring (Top 10 metrics)</td><td>Dor/Matan</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Metrics defined, dashboard build pending</td></tr>
-<tr><td>Painpoint Fix</td><td>Concise Sales Pitch</td><td>Kayla</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Draft exists, needs testing</td></tr>
-<tr><td>Painpoint Fix</td><td>Faster Client Adaptations</td><td>Product</td><td><span class='badge Yellow'>Needs Attention</span></td><td>SLA policy drafted, implementation pending</td></tr>
-<tr><td>Painpoint Fix</td><td>Top 5 Marketing Ads Boost</td><td>Marketing</td><td><span class='badge Red'>At Risk</span></td><td>Not started</td></tr>
-<tr><td>Painpoint Fix</td><td>$99 Lite Tier</td><td>Product</td><td><span class='badge Green'>On Track</span></td><td>In beta scoping</td></tr>
-<tr><td>Legal &amp; Compliance</td><td>US Terms of Use (Paul Hastings review)</td><td>Kayla</td><td><span class='badge Red'>At Risk</span></td><td>Kickoff pending; align with self-serve launch</td></tr>
-<tr><td>Legal &amp; Compliance</td><td>Self-Serve (all regions) to Goldfarb</td><td>Ofir</td><td><span class='badge Red'>At Risk</span></td><td>Package &amp; send for review</td></tr>
-<tr><td>Legal &amp; Compliance</td><td>IL Data Processing policy</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Collect feedback from Goldfarb</td></tr>
-<tr><td>Legal &amp; Compliance</td><td>IL Store legal review</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Discuss with Goldfarb</td></tr>
-<tr><td>Legal &amp; Compliance</td><td>IL Team options (board packet)</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Prep for next board cycle</td></tr>
-<tr><td>Legal &amp; Compliance</td><td>Guy salary (50k NIS) draft</td><td>Ofir</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Draft &amp; circulate</td></tr>
-<tr><td>Legal &amp; Compliance</td><td>California registration confirmation</td><td>Omer</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Confirm receipt from Heather</td></tr>
-<tr><td>Clinical Proof</td><td>BD One-Pager: Heart &amp; Metabolic outperform standards</td><td>Hadar/Gil</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Draft using deck AUC/calibration plots</td></tr>
-<tr><td>Clinical Proof</td><td>Metabolic Model: add HbA1c, FBG, insulin, DPF, steps</td><td>Gil</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Define data pulls &amp; timeline</td></tr>
-<tr><td>Hiring</td><td>QA hire</td><td>Dani</td><td><span class='badge Red'>At Risk</span></td><td>Open requisition</td></tr>
-<tr><td>Hiring</td><td>Data Scientist hire</td><td>Dani</td><td><span class='badge Red'>At Risk</span></td><td>Open requisition</td></tr>
-<tr><td>Hiring</td><td>Hire Fractional CISO</td><td>Dor</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Part‑time cyber leadership; risk/compliance/IR readiness; link spec TBD</td></tr>
-<tr><td>Public Narrative</td><td>Site copy: &#39;intelligence layer for proactive care&#39; mirrored in decks</td><td>Hadar</td><td><span class='badge Green'>On Track</span></td><td>Consistent with board deck messaging</td></tr>
-<tr><td>Public Narrative</td><td>Security statement on site (encrypted in transit/at rest, AWS local)</td><td>Dor</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Verify matches legal policy docs</td></tr>
-<tr><td>Public Narrative</td><td>Health Dashboard &amp; App pages align with current roadmap</td><td>Matan</td><td><span class='badge Yellow'>Needs Attention</span></td><td>Ensure features match Q3/Q4 milestones</td></tr>
+<tr data-area='G&amp;A Rhythm' data-owner='Omer' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>G&amp;A Rhythm</td><td>Board 1-pager for $1M &amp; $2M ARR scenarios</td><td>Omer</td><td>Not started, high priority for Q3</td></tr>
+<tr data-area='G&amp;A Rhythm' data-owner='Omer' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>G&amp;A Rhythm</td><td>2026 Model ($5M board / $10M sales)</td><td>Omer</td><td>Not started, target Q4</td></tr>
+<tr data-area='Ops Execution' data-owner='Hadar' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>Ops Execution</td><td>Mega Affiliate Deal</td><td>Hadar</td><td>Not started, Q3 high impact</td></tr>
+<tr data-area='Tech/Product' data-owner='Dor/Matan' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>Tech/Product</td><td>Top 5 Security Certificates</td><td>Dor/Matan</td><td>Vendor/advisor not yet secured</td></tr>
+<tr data-area='Painpoint Fix' data-owner='Marketing' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>Painpoint Fix</td><td>Top 5 Marketing Ads Boost</td><td>Marketing</td><td>Not started</td></tr>
+<tr data-area='Legal &amp; Compliance' data-owner='Kayla' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>Legal &amp; Compliance</td><td>US Terms of Use (Paul Hastings review)</td><td>Kayla</td><td>Kickoff pending; align with self-serve launch</td></tr>
+<tr data-area='Legal &amp; Compliance' data-owner='Ofir' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>Legal &amp; Compliance</td><td>Self-Serve (all regions) to Goldfarb</td><td>Ofir</td><td>Package &amp; send for review</td></tr>
+<tr data-area='Hiring' data-owner='Dani' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>Hiring</td><td>QA hire</td><td>Dani</td><td>Open requisition</td></tr>
+<tr data-area='Hiring' data-owner='Dani' data-prio='1'><td><span class='prio p1'>#1</span> P1 — Critical</td><td>Hiring</td><td>Data Scientist hire</td><td>Dani</td><td>Open requisition</td></tr>
+<tr data-area='Financial Context' data-owner='HR/Dani' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Financial Context</td><td>Hire API Engineer</td><td>HR/Dani</td><td>Role approved, hiring in progress</td></tr>
+<tr data-area='Financial Context' data-owner='HR/Dani' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Financial Context</td><td>Hire Marketing Operator &amp; Digital Marketing Expert</td><td>HR/Dani</td><td>To start post-funding confirmation</td></tr>
+<tr data-area='Ops Execution' data-owner='Hadar' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Ops Execution</td><td>Affiliate Program Launch</td><td>Hadar</td><td>In progress, Q3 delivery</td></tr>
+<tr data-area='Ops Execution' data-owner='Hadar' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Ops Execution</td><td>Funnel Optimization ($300 CAC target)</td><td>Hadar</td><td>In progress, tracking conversion</td></tr>
+<tr data-area='Tech/Product' data-owner='Dor/Matan' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Tech/Product</td><td>Improve API &amp; Documentation</td><td>Dor/Matan</td><td>Pending API engineer hire</td></tr>
+<tr data-area='Tech/Product' data-owner='Dor/Matan' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Tech/Product</td><td>Performance Monitoring (Top 10 metrics)</td><td>Dor/Matan</td><td>Metrics defined, dashboard build pending</td></tr>
+<tr data-area='Painpoint Fix' data-owner='Kayla' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Painpoint Fix</td><td>Concise Sales Pitch</td><td>Kayla</td><td>Draft exists, needs testing</td></tr>
+<tr data-area='Painpoint Fix' data-owner='Product' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Painpoint Fix</td><td>Faster Client Adaptations</td><td>Product</td><td>SLA policy drafted, implementation pending</td></tr>
+<tr data-area='Legal &amp; Compliance' data-owner='Ofir' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Legal &amp; Compliance</td><td>IL Data Processing policy</td><td>Ofir</td><td>Collect feedback from Goldfarb</td></tr>
+<tr data-area='Legal &amp; Compliance' data-owner='Ofir' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Legal &amp; Compliance</td><td>IL Store legal review</td><td>Ofir</td><td>Discuss with Goldfarb</td></tr>
+<tr data-area='Legal &amp; Compliance' data-owner='Ofir' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Legal &amp; Compliance</td><td>IL Team options (board packet)</td><td>Ofir</td><td>Prep for next board cycle</td></tr>
+<tr data-area='Legal &amp; Compliance' data-owner='Ofir' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Legal &amp; Compliance</td><td>Guy salary (50k NIS) draft</td><td>Ofir</td><td>Draft &amp; circulate</td></tr>
+<tr data-area='Legal &amp; Compliance' data-owner='Omer' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Legal &amp; Compliance</td><td>California registration confirmation</td><td>Omer</td><td>Confirm receipt from Heather</td></tr>
+<tr data-area='Clinical Proof' data-owner='Hadar/Gil' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Clinical Proof</td><td>BD One-Pager: Heart &amp; Metabolic outperform standards</td><td>Hadar/Gil</td><td>Draft using deck AUC/calibration plots</td></tr>
+<tr data-area='Clinical Proof' data-owner='Gil' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Clinical Proof</td><td>Metabolic Model: add HbA1c, FBG, insulin, DPF, steps</td><td>Gil</td><td>Define data pulls &amp; timeline</td></tr>
+<tr data-area='Hiring' data-owner='Dor' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Hiring</td><td>Hire Fractional CISO</td><td>Dor</td><td>Part‑time cyber leadership; risk/compliance/IR readiness; link spec TBD</td></tr>
+<tr data-area='Public Narrative' data-owner='Dor' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Public Narrative</td><td>Security statement on site (encrypted in transit/at rest, AWS local)</td><td>Dor</td><td>Verify matches legal policy docs</td></tr>
+<tr data-area='Public Narrative' data-owner='Matan' data-prio='2'><td><span class='prio p2'>#2</span> P2 — Important</td><td>Public Narrative</td><td>Health Dashboard &amp; App pages align with current roadmap</td><td>Matan</td><td>Ensure features match Q3/Q4 milestones</td></tr>
+<tr data-area='Financial Context' data-owner='Guy' data-prio='3'><td><span class='prio p3'>#3</span> P3 — Normal</td><td>Financial Context</td><td>Maintain 18-month runway post-VK SAFE &amp; target raise</td><td>Guy</td><td>Runway intact, $1M VK SAFE signed, $1M Atria/Cenegenics targeted</td></tr>
+<tr data-area='Painpoint Fix' data-owner='Product' data-prio='3'><td><span class='prio p3'>#3</span> P3 — Normal</td><td>Painpoint Fix</td><td>$99 Lite Tier</td><td>Product</td><td>In beta scoping</td></tr>
+<tr data-area='Public Narrative' data-owner='Hadar' data-prio='3'><td><span class='prio p3'>#3</span> P3 — Normal</td><td>Public Narrative</td><td>Site copy: &#39;intelligence layer for proactive care&#39; mirrored in decks</td><td>Hadar</td><td>Consistent with board deck messaging</td></tr>
 
           </tbody>
         </table>
@@ -152,7 +161,7 @@
   </main>
 
 <script>
-// Tabs (plain JS)
+// Tabs
 var tabs = document.querySelectorAll('.tab');
 for (var i=0;i<tabs.length;i++) {
   tabs[i].addEventListener('click', function() {
@@ -163,6 +172,38 @@ for (var i=0;i<tabs.length;i++) {
     document.getElementById(this.getAttribute('data-target')).classList.add('active');
   });
 }
+
+// Filters
+var searchEl = document.getElementById('search');
+var areaEl = document.getElementById('filter-area');
+var ownerEl = document.getElementById('filter-owner');
+var prioEl = document.getElementById('filter-priority');
+var rows = Array.prototype.slice.call(document.querySelectorAll('#ops-table tbody tr'));
+
+function applyFilters() {
+  var q = (searchEl.value || '').toLowerCase();
+  var area = areaEl.value;
+  var owner = ownerEl.value;
+  var prio = prioEl.value;
+
+  rows.forEach(function(tr) {
+    var text = tr.textContent.toLowerCase();
+    var matchQ = !q || text.indexOf(q) !== -1;
+    var matchArea = !area || tr.getAttribute('data-area') === area;
+    var matchOwner = !owner || tr.getAttribute('data-owner') === owner;
+    var matchPrio = !prio || tr.getAttribute('data-prio') === prio;
+    tr.style.display = (matchQ && matchArea && matchOwner && matchPrio) ? '' : 'none';
+  });
+}
+
+['input','change'].forEach(function(evt) {
+  searchEl.addEventListener(evt, applyFilters);
+  areaEl.addEventListener(evt, applyFilters);
+  ownerEl.addEventListener(evt, applyFilters);
+  prioEl.addEventListener(evt, applyFilters);
+});
+
+applyFilters();
 </script>
 </body>
 </html>
